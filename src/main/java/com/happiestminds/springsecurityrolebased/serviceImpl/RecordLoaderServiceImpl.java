@@ -36,14 +36,6 @@ public class RecordLoaderServiceImpl implements RecordLoaderService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	
-	/*@Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
- */
-
 
 	@Override
 	public void insertRecord() {
@@ -121,15 +113,6 @@ public class RecordLoaderServiceImpl implements RecordLoaderService {
 		}
 		return role;
 	}
-
-	 @Bean 
-	 public PasswordEncoder passwordEncoder()
-	 { 
-		 PasswordEncoder encoder= new BCryptPasswordEncoder();
-	 System.out.println("Password Instance ::"+encoder);
-		 return encoder;
-
-	 }
 	 
 
 }
