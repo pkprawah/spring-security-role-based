@@ -19,8 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableJpaRepositories(basePackages="com.pawan.springsecurityrolebased.repository")
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableJpaRepositories(basePackages="com.pawan.springsecurityrolebased")
 public class WebSecurityConfigure extends WebSecurityConfigurerAdapter  {
 	
 	@Autowired
@@ -41,53 +41,61 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter  {
 	
 	 @PostConstruct
 	    public void setupInitialization() {
-		 //System.out.print("call setupInitialization +1 ");
+		 System.out.print("call setupInitialization +1 ");
 	        userDetailsService =applicationContext.getBean(UserDetailsServiceCustom.class);
 	}
 	 	
 	 	
 	    @Override
 	    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-	    	 //System.out.print("call configure -> AuthenticationManagerBuilder +2 ");
+	    	 System.out.print("call configure -> AuthenticationManagerBuilder +2 ");
 	        auth.userDetailsService(userDetailsService)
 	            .passwordEncoder(encoder())
 	            .and()
 	            .authenticationProvider(authenticationProvider());
-	        //System.out.print("call configure -> AuthenticationManagerBuilder +2A ");
+	        System.out.print("call configure -> AuthenticationManagerBuilder +2A ");
 	    }
 
 	    @Override
 	    public void configure(WebSecurity web) throws Exception {
-	    	 //System.out.print("call configure -> WebSecurity  +3 ");
+	    	 System.out.print("call configure -> WebSecurity  +3 ");
 	        web.ignoring()
 	            .antMatchers("/resources/**");
 	    }
 
 	    @Override
 	    protected void configure(final HttpSecurity http) throws Exception {
-	    	// System.out.print("call configure -> HttpSecurity +4 ");
-	       // http.authorizeRequests()
-	          //  .antMatchers("**/access/**").access("hasRole('ADMIN')")
-	          //  .and()
-	           // .formLogin()
-	           // .permitAll()
-	           // .and()
-	           // .csrf()
-	           // .disable();
+	    	System.out.print("call configure -> HttpSecurity +4 ");
+	    		//http.authorizeRequests()
+	            //.antMatchers("**/access/**").authenticated()
+	          // .and()
+	           //.formLogin()
+	          // .permitAll()
+	           //.and()
+	          // .csrf()
+	        //  .disable();
 	    	
 	    	http.authorizeRequests()
 	        .antMatchers("/", "/home").access("hasRole('USER')")
 	        .antMatchers("/admin/**").access("hasRole('ADMIN')")
 	        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
-	        .and().formLogin().loginPage("/login").successHandler(customSuccessHandler)
-	        .usernameParameter("ssoId").passwordParameter("password")
-	        .and().csrf()
-	        .and().exceptionHandling().accessDeniedPage("/Access_Denied");
-	    }
+	        .and()
+	        .formLogin().loginPage("/login")
+	        .usernameParameter("username")
+            .passwordParameter("password")
+            .loginProcessingUrl("/login").successHandler(customSuccessHandler)
+	        .and()
+	        .exceptionHandling().accessDeniedPage("/Access_Denied")
+	        .and()
+	        .csrf().disable();
+	}
+	    	
+	    	
+	    
 
 	    @Bean
 	    public DaoAuthenticationProvider authenticationProvider() {
-	    //	System.out.print("call authenticationProvider -> +5 ");
+	    	System.out.print("call authenticationProvider -> +5 ");
 	        final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 	        authProvider.setUserDetailsService(userDetailsService);
 	        authProvider.setPasswordEncoder(encoder());
@@ -97,7 +105,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter  {
 
 	    @Bean
 	    public PasswordEncoder encoder() {
-	    	//System.out.print("call PasswordEncoder -> +6 ");
+	    	System.out.print("call PasswordEncoder -> +6 ");
 	        return new BCryptPasswordEncoder();
 	    }
 	    

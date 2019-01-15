@@ -3,6 +3,7 @@ package com.pawan.springsecurityrolebased.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class HelloWorldController {
+public class AppSigningController {
 	
-	
-	 @RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	 @RequestMapping(value ="/home", method = RequestMethod.GET)
 	    public String homePage(ModelMap model) {
+		 System.out.println("home page ::"+model);
 	        model.addAttribute("user", getPrincipal());
-	        return "welcome";
+	        return "home";
 	    }
 	 
 	    @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -28,19 +29,19 @@ public class HelloWorldController {
 	        return "admin";
 	    }
 	     
-	    @RequestMapping(value = "/db", method = RequestMethod.GET)
+	  @RequestMapping(value = "/db", method = RequestMethod.GET)
 	    public String dbaPage(ModelMap model) {
 	        model.addAttribute("user", getPrincipal());
 	        return "dba";
 	    }
 	 
-	    @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
+	   @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
 	    public String accessDeniedPage(ModelMap model) {
 	        model.addAttribute("user", getPrincipal());
 	        return "accessDenied";
 	    }
 	 
-	    @RequestMapping(value = "/login", method = RequestMethod.GET)
+	    @RequestMapping(value="/login", method = RequestMethod.GET)
 	    public String loginPage() {
 	    	System.out.println("login page called:::");
 	        return "login";

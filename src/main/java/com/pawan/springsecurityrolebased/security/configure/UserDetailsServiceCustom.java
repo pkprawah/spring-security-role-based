@@ -36,10 +36,10 @@ public class UserDetailsServiceCustom implements UserDetailsService{
 	
 	@Override
     public UserDetails loadUserByUsername(final String username) {
-		 //System.out.print("call UserDetailsServiceCustom -> loadUserByUsername +8 ");
-		 //System.out.println(":User details for loadUserByUsername :::"+username);
+		 System.out.print("call UserDetailsServiceCustom -> loadUserByUsername +8 ");
+		 System.out.println(":User details for loadUserByUsername :::"+username);
          User applicationUser = userRepository.getUserByUsername(username);
-       // System.out.println(":User details for loadUserByUsername :::"+applicationUser);
+       System.out.println(":User details for loadUserByUsername :::"+applicationUser);
         if (applicationUser == null) {
             throw new UsernameNotFoundException(username);
         }

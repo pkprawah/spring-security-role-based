@@ -25,7 +25,12 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 	@Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException {
-        String targetUrl = determineTargetUrl(authentication);
+		
+		System.out.print(":: CustomSuccessHandler- > handle :: "+authentication +"\t"+request +" \t"+response);
+       
+		System.out.print(":: CustomSuccessHandler -> Calling determineTargetUrl ");
+		
+		String targetUrl = determineTargetUrl(authentication);
  
         if (response.isCommitted()) {
             System.out.println("Can't redirect");
@@ -42,7 +47,11 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     protected String determineTargetUrl(Authentication authentication) {
         String url = "";
  
+        System.out.print(":: CustomSuccessHandler -> Called determineTargetUrl " + authentication); 
+        
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        
+        System.out.println(":: determineTargetUrl -> authorities :: "+authorities);
  
         List<String> roles = new ArrayList<String>();
  
@@ -50,6 +59,8 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             roles.add(a.getAuthority());
         }
  
+        System.out.println(":: determineTargetUrl -> roles List  :: "+roles);
+        
         if (isDba(roles)) {
             url = "/db";
         } else if (isAdmin(roles)) {
@@ -60,7 +71,9 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             url = "/accessDenied";
         }
  
+        System.out.print("Final URL to redirect:::"+url);
         return url;
+        
     }
  
     private boolean isUser(List<String> roles) {
