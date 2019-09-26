@@ -25,8 +25,7 @@ public class UserDetailsPrincipal extends User implements UserDetails{
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		 //System.out.print("call UserDetailsPrincipal -> getAuthorities +11 ");
-		List<Role> roleList=(List)super.getRoles();
-		//System.out.print("Role List :::"+roleList);
+		List<Role> roleList=(List<Role>)super.getRoles();
 		List<GrantedAuthority> authorities=new ArrayList<GrantedAuthority>();
 		SimpleGrantedAuthority simpleGrantedAuthority=null;
 		String roleName=null;

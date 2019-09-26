@@ -29,6 +29,11 @@ public class AppSigningController {
 	        return "admin";
 	    }
 	     
+	    @RequestMapping(value = "/admin/edit", method = RequestMethod.GET)
+	    public String adminEditPage(ModelMap model) {
+	        model.addAttribute("user", getPrincipal());
+	        return "admin";
+	    }
 	  @RequestMapping(value = "/db", method = RequestMethod.GET)
 	    public String dbaPage(ModelMap model) {
 	        model.addAttribute("user", getPrincipal());

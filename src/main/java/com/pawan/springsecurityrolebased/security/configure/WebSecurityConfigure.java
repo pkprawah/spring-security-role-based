@@ -76,8 +76,8 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter  {
 	        //  .disable();
 	    	
 	    	http.authorizeRequests()
-	        .antMatchers("/", "/home").access("hasRole('USER')")
-	        .antMatchers("/admin/**").access("hasRole('ADMIN')")
+	    	.antMatchers("/", "/home").access("hasRole('USER')")
+	    	.antMatchers("/admin/**").access("hasRole('ADMIN')")
 	        .antMatchers("/db/**").access("hasRole('ADMIN') and hasRole('DBA')")
 	        .and()
 	        .formLogin().loginPage("/login")
